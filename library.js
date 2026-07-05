@@ -137,3 +137,44 @@ function write(text, pos, colour) {
 function clear() {
     c.clearRect(0, 0, window.innerWidth, window.innerHeight)
 }
+class Scene {
+    constructor(tilemap) {
+        this.tilemap = tilemap
+        this.objects = {}
+        this.uis = {}
+        this.time = 0
+        this.deltaTime = 0
+        this.frame = 0
+    }
+    add(thing) {
+        if (scene.objects[thing.id] != undefined) {
+            console.error(`An object already exists with ID ${thing.id}\nIf you would like to set the object please use scene.set()`)
+        } else {
+            scene.objects[thing.id] = thing
+            return thing.id
+        }
+    }
+    addUI(thing) {
+        if (scene.uis[thing.id] != undefined) {
+            console.error(`A UI object already exists with ID ${thing.id}\nIf you would like to set the object please use scene.set()`)
+        } else {
+            scene.uis[thing.id] = thing
+            return thing.id
+        }
+    }
+    set(thing) {
+        scene.objects[thing.id] = thing
+    }
+    setUI(thing) {
+        scene.uis[thing.id] = thing
+    }
+    tilemapAt(pos) {
+        return this.tilemap[Math.floor(pos.y / 250)][Math.floor(pos.x / 250)]
+    }
+}
+class SceneObject {
+    constructor(value, id = Math.random()) {
+        this.value = value
+        this.id = id
+    }
+}
